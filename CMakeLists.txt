@@ -97,6 +97,14 @@ foreach(i ${TEST_SRC})
   add_executable(${name} ${i})
 endforeach()
 
+# build bench
+file(GLOB_RECURSE TEST_SRC "bench/*.cpp")
+
+foreach(i ${TEST_SRC})
+  get_filename_component(name ${i} NAME_WE)
+  add_executable(${name} ${i})
+endforeach()
+
 # build dist package
 set(DIST_ROOT_DIR "./w-server-dist/")
 set(DIST_MAIN_DIR "${DIST_ROOT_DIR}/usr/local/w-server")
