@@ -1,16 +1,16 @@
 start() {
-  cd /usr/local/w_server/
-  sudo -u zuser bash run.sh start
+  cd /usr/local/w-server/
+  sudo bash run.sh start
 }
 
 stop() {
-  cd /usr/local/w_server/
-  sudo -u zuser bash run.sh stop
+  cd /usr/local/w-server/
+  sudo bash run.sh stop
 }
 
 status() {
-  cd /usr/local/w_server/
-  sudo -u zuser bash run.sh status
+  cd /usr/local/w-server/
+  sudo bash run.sh status
 }
 
 case "$1" in

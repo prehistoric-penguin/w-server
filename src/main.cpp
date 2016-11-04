@@ -37,8 +37,6 @@ int main(int argc, char *argv[]) {
                           " [OPTIONS]...");
   google::ParseCommandLineFlags(&argc, &argv, true);
 
-  FLAGS_log_dir = "./";
-
   google::InitGoogleLogging(argv[0]);
 
   daemon_mode();

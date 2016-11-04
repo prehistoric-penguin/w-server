@@ -119,8 +119,8 @@ add_custom_target(dist
   COMMAND cp -f ${CMAKE_CURRENT_BINARY_DIR}/${WSERVER} ${DIST_MAIN_DIR}/bin
   COMMAND cp -rf ${CMAKE_CURRENT_SOURCE_DIR}/distribute/conf/* ${DIST_MAIN_DIR}/distribute
 
-  COMMAND cp -f ${CMAKE_CURRENT_SOURCE_DIR}/distribute/z-server-service ${DIST_ETC_DIR}/init.d
-  COMMAND chmod +x ${DIST_ETC_DIR}/init.d/z-server-service
+  COMMAND cp -f ${CMAKE_CURRENT_SOURCE_DIR}/distribute/w-server-service ${DIST_ETC_DIR}/init.d
+  COMMAND chmod +x ${DIST_ETC_DIR}/init.d/w-server-service
 
   COMMAND cp -f ${CMAKE_CURRENT_SOURCE_DIR}/distribute/control ${DIST_DEBIAN_DIR}
 
