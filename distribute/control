@@ -1,0 +1,7 @@
+Package: w-server
+Version: 1.0.0
+Priority: extra
+Maintainer: prehistoripenguin<prehistoripenguin@qq.com>
+Architecture: amd64
+Description: A hibrid service maked up with Facebook backend stack.
+Section: unknown

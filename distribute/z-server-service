@@ -1,0 +1,34 @@
+start() {
+  cd /usr/local/w_server/
+  sudo -u zuser bash run.sh start
+}
+
+stop() {
+  cd /usr/local/w_server/
+  sudo -u zuser bash run.sh stop
+}
+
+status() {
+  cd /usr/local/w_server/
+  sudo -u zuser bash run.sh status
+}
+
+case "$1" in
+        start)
+                start
+                ;;
+        stop)
+                stop
+                ;;
+        restart)
+                stop
+                sleep 1
+                start
+                ;;
+        status)
+               status
+               ;;
+        *)
+                echo "Usage: $0 {start|stop|restart|status}"
+                exit 1
+esac
