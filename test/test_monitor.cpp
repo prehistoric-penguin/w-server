@@ -20,7 +20,9 @@ TEST(monitor, json_str) {
     w::Marker m2(key2);
     w::Marker m3(key2);
   }
+  std::this_thread::sleep_for(std::chrono::seconds(31));
   std::string json_str = w::Monitor::Report();
+  EXPECT_TRUE(!json_str.empty());
   auto dynamic_obj = folly::parseJson(folly::StringPiece(json_str));
 
   EXPECT_TRUE(dynamic_obj.find(key) != dynamic_obj.items().end());
