@@ -29,16 +29,17 @@ message(STATUS "proxygen header:" ${PROXYGEN_HEADERS})
 message(STATUS "proxygen library:" ${PROXYGEN_LIBRARIES})
 message(STATUS "proxygen http server library:" ${PROXYGEN_HTTP_SERVER_LIBRARIES})
 
+
+# link thriftcpp2 twice, to work around strange linking error
 find_library(FBTHRIFT_LIBRARY libthrift.a)
 find_library(FBTHRIFTCPP2_LIBRARY libthriftcpp2.a)
 find_library(FBTHRIFTZ_LIBRARY libthriftz.a)
 find_library(FBTHRIFTSTUBS_LIBRARY libsaslstubs.a)
-
 set(FBTHRIFT_LIBRARIES
+  ${FBTHRIFTCPP2_LIBRARY}
   ${FBTHRIFT_LIBRARY}
   ${FBTHRIFTCPP2_LIBRARY}
   ${FBTHRIFTZ_LIBRARY}
   ${FBTHRIFTSTUBS_LIBRARY}
 )
-
 message(STATUS "fbthrift libraries: " ${FBTHRIFT_LIBRARIES})

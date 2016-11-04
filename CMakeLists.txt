@@ -50,49 +50,31 @@ add_executable(${WSERVER}
   ${MAIN_FILE}
 )
 
-
 set(DEPEND_LIBS
-  ${FOLLY_LIBRARIES}
   ${FBTHRIFT_LIBRARIES}
-  ${ROCKSDB_LIBRRARIES}
-  ${LIB_JEMMALLOC}
-  #${COMPRESSION_LIBS}
-  ${Boost_LIBRARIES}
-  #${ENCRYPT_LIBRARIES}
-  ${GLOG_LIBRARIES}
-  ${GFLAGS_LIBRARIES}
-  ${DOUBLE_CONVERSION_LIBRARIES}
-  ${IBERTY_LIBRARIES}
-  ${NUMA_LIBRARIES}
-  ${JEMALLOC_LIBRARIES}
-  ${LIBUNWIND_LIBRARIES}
-  libthrift.a
-  libthriftcpp2.a
-  libthriftz.a
-  libsaslstubs.a
-
   ${PROXYGEN_HTTP_SERVER_LIBRARIES}
   ${PROXYGEN_LIBRARIES}
-  ${WANGLE_LIBRARIES} 
+  ${WANGLE_LIBRARIES}
   ${FOLLY_LIBRARIES}
-
-  #${LZMA_LIBRARIES}
+  ${ROCKSDB_LIBRRARIES}
+  ${GLOG_LIBRARIES}
+  ${GFLAGS_LIBRARIES}
+  ${NUMA_LIBRARIES}
+  ${JEMALLOC_LIBRARIES}
+  ${IBERTY_LIBRARIES}
+  ${DOUBLE_CONVERSION_LIBRARIES}
+  ${LIBUNWIND_LIBRARIES}
+  ${COMPRESSION_LIBRARIES}
+  ${ENCRYPT_LIBRARIES}
+  ${Boost_LIBRARIES}
   pthread
   dl
   rt
   event
-  crypto
   crypt
   k5crypto
   krb5
-  lzma
-  snappy
   gssapi_krb5
-  ssl
-  sasl2
-  libbz2.a
-  liblz4.a
-  z
 )
 
 # link w-server
@@ -130,18 +112,18 @@ add_custom_target(dist
   COMMAND ${CMAKE_COMMAND} -E make_directory ${DIST_ETC_DIR}
   COMMAND ${CMAKE_COMMAND} -E make_directory ${DIST_ETC_DIR}/init.d
   COMMAND ${CMAKE_COMMAND} -E make_directory ${DIST_DEBIAN_DIR}
-  
+
   COMMAND cp -f ${CMAKE_CURRENT_SOURCE_DIR}/distribute/run.sh ${DIST_MAIN_DIR}
   COMMAND chmod +x ${DIST_MAIN_DIR}/run.sh
-  
+
   COMMAND cp -f ${CMAKE_CURRENT_BINARY_DIR}/${WSERVER} ${DIST_MAIN_DIR}/bin
   COMMAND cp -rf ${CMAKE_CURRENT_SOURCE_DIR}/distribute/conf/* ${DIST_MAIN_DIR}/distribute
-  
+
   COMMAND cp -f ${CMAKE_CURRENT_SOURCE_DIR}/distribute/z-server-service ${DIST_ETC_DIR}/init.d
   COMMAND chmod +x ${DIST_ETC_DIR}/init.d/z-server-service
-  
+
   COMMAND cp -f ${CMAKE_CURRENT_SOURCE_DIR}/distribute/control ${DIST_DEBIAN_DIR}
-  
+
   COMMAND tar -czvf w-server-dist.tar.gz ${DIST_ROOT_DIR}
   COMMAND dpkg-deb -b ${DIST_ROOT_DIR}
   DEPENDS ${WSERVER}
