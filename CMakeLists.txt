@@ -5,7 +5,10 @@ add_definitions (-g -O2 -std=c++11)
 
 set(WSERVER "w-server")
 
+# comment this line for multiple definition of `_Unwind_Resume'
+# in both libgcc_eh.a and libunwind.a
 #link_libraries(-static-libstdc++ -static-libgcc)
+
 # include config
 FILE(GLOB CMAKE_CONFIGS ${CMAKE_SOURCE_DIR}/cmake_config/*.cmake)
 foreach(config ${CMAKE_CONFIGS})
