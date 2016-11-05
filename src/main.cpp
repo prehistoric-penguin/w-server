@@ -7,6 +7,7 @@
 #include <chrono>
 #include <thrift/lib/cpp2/server/ThriftServer.h>
 
+#include "monitor/stats.h"
 #include "http_service/server.h"
 #include "thrift_service/calculator_handler.h"
 
@@ -28,7 +29,7 @@ void daemon_mode() {
     LOG(FATAL) << "start daemon mode failed";
     exit(1);
   } else {
-    LOG(INFO) << "start daemon mode";
+    //LOG(INFO) << "start daemon mode";
   }
 }
 
@@ -37,29 +38,29 @@ int main(int argc, char *argv[]) {
                           " [OPTIONS]...");
   google::ParseCommandLineFlags(&argc, &argv, true);
 
-  google::InitGoogleLogging(argv[0]);
-
   daemon_mode();
+
+  google::InitGoogleLogging(argv[0]);
 
   // http server
   w::HttpServer http_srv(FLAGS_http_port, FLAGS_http_worker_threads,
                          FLAGS_http_timeout);
   http_srv.AsyncStart();
 
+  w::Marker("chaos");
+
   // thrift server
+  LOG(INFO) << "Start thrift service on port:" << FLAGS_thrift_port
+      << ",with worker threads num:" << FLAGS_thrift_worker_threads
+      << ",idle time out:" << FLAGS_thrift_timeout;
+
   apache::thrift::ThriftServer thrift_srv;
   thrift_srv.setInterface(std::make_shared<w::CalculatorHandler>());
   thrift_srv.setPort(FLAGS_thrift_port);
   thrift_srv.setPoolThreadName("ThriftWorker");
   thrift_srv.setNWorkerThreads(FLAGS_thrift_worker_threads);
-
-  LOG(INFO) << "Start thrift service on port:" << FLAGS_thrift_port
-      << ",with worker threads num:" << FLAGS_thrift_worker_threads
-      << ",idle time out:" << FLAGS_thrift_timeout;
-
+  thrift_srv.setSaslEnabled(false);
   thrift_srv.serve();
-
-  LOG(INFO) << "Process shutting down";
 
   google::ShutdownGoogleLogging();
   return 0;
