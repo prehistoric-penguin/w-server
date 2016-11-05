@@ -8,6 +8,9 @@
 namespace w {
 
 using namespace calculator;
+void CalculatorHandler::ping() {
+  LOG(INFO) << "ping";
+}
 
 void CalculatorHandler::async_tm_calculate(
     std::unique_ptr<apache::thrift::HandlerCallback<int32_t>> callback,
