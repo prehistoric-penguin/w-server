@@ -4,7 +4,8 @@ PROJPATH=$(cd `dirname $0` && pwd)
 EXENAME=${PROJPATH}/bin/w-server
 
 function check_bin() {
-	if [ ! -x $EXENAME ]; then
+	if [ ! -x $EXENAME ]
+	then
 		echo "ERROR: $EXENAME is not existing"
 		exit 1
 	fi
