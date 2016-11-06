@@ -35,16 +35,30 @@ file(GLOB_RECURSE GEN_CPP_SRC "src/gen-cpp2/*.cpp")
 file(GLOB_RECURSE HTTP_SERVICE_SRC "src/http_service/*.cpp")
 file(GLOB_RECURSE MONITOR_SRC "src/monitor/*.cpp")
 file(GLOB_RECURSE THRIFT_SERVICE_SRC "src/thrift_service/*.cpp")
+
 set(MAIN_FILE "src/main.cpp")
 
+# transform latest git commit log
+set(VERSION_SRC "src/version/version.cpp")
+FILE(REMOVE
+  OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/${VERSION_SRC}
+)
+
+ADD_CUSTOM_COMMAND(
+  OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/${VERSION_SRC}
+  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/scripts/generate_version.sh
+  ${CMAKE_CURRENT_SOURCE_DIR}/${VERSION_SRC}
+)
+
+# build common library
 set(COMMON_LIB_SRC
   ${GEN_CPP_SRC}
   ${HTTP_SERVICE_SRC}
   ${MONITOR_SRC}
   ${THRIFT_SERVICE_SRC}
+  ${VERSION_SRC}
 )
 
-# build common library
 add_library(server_common
   ${COMMON_LIB_SRC}
 )

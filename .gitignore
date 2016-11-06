@@ -30,3 +30,4 @@
 
 build
 *.swp
+src/version/version.cpp
